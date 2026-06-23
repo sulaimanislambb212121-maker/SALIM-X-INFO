@@ -17,7 +17,7 @@ function getItemType(id){const s=String(id);return PREFIX_MAP[s.slice(0,3)]||PRE
 (function initHack(){
   const canvas = document.getElementById('hackCanvas');
   const ctx    = canvas.getContext('2d');
-  const chars  = 'アイウエオカキクケコ01アイウエオ10ABCDEF0123456789</>{}[];:#$%^&*|\\KAWSARFFINFO'.split('');
+  const chars  = 'アイウエオカキクケコ01アイウエオ10ABCDEF0123456789</>{}[];:#$%^&*|\\SALIM X INFO'.split('');
   let cols, drops, fontSize = 13;
 
   function resize(){
