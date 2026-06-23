@@ -364,7 +364,7 @@ def start_background_tasks():
 
 if __name__ == '__main__':
     print("="*55)
-    print("🚀 KAWSARxFFINFO - Free Fire Info Website")
+    print("🚀 SALIM X INFO - Free Fire Info Website")
     print("="*55)
     print(f"🎯 Region Priority: {' -> '.join(REGION_PRIORITY[:3])} -> Others")
 
