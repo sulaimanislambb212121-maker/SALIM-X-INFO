@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KAWSARxFFINFO</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
 
+<!-- HACKING CANVAS BACKGROUND -->
+<canvas id="hackCanvas"></canvas>
+
+<!-- WELCOME BANNER -->
+<div id="welcomeBanner">
+  <div class="banner-inner">
+    <div class="banner-logo">⚡</div>
+    <h1 class="banner-title">WELCOME TO</h1>
+    <h1 class="banner-brand">KAWSARxFFINFO</h1>
+    <h2 class="banner-sub">WEBSITE</h2>
+    <div class="banner-line"></div>
+    <p class="banner-tagline">Free Fire Player Information System</p>
+    <button class="banner-btn" onclick="closeBanner()">ENTER SITE &nbsp;▶</button>
+  </div>
+</div>
+
+<!-- MAIN SITE -->
+<div id="mainSite" style="display:none;">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-wrap">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">KAWSAR<span class="logo-accent">xFF</span>INFO</span>
+      </div>
+      <div class="header-right">
+        <!-- COLOR PICKER -->
+        <div class="color-picker-wrap">
+          <span class="color-label">COLOR</span>
+          <div class="color-swatches">
+            <button class="swatch active" data-color="#00ffff" style="background:#00ffff;" title="Cyan" onclick="setThemeColor('#00ffff',this)"></button>
+            <button class="swatch" data-color="#ff6b00" style="background:#ff6b00;" title="Orange" onclick="setThemeColor('#ff6b00',this)"></button>
+            <button class="swatch" data-color="#00ff87" style="background:#00ff87;" title="Green" onclick="setThemeColor('#00ff87',this)"></button>
+            <button class="swatch" data-color="#a855f7" style="background:#a855f7;" title="Purple" onclick="setThemeColor('#a855f7',this)"></button>
+            <button class="swatch" data-color="#ffd700" style="background:#ffd700;" title="Gold" onclick="setThemeColor('#ffd700',this)"></button>
+            <button class="swatch" data-color="#ff4fa3" style="background:#ff4fa3;" title="Pink" onclick="setThemeColor('#ff4fa3',this)"></button>
+          </div>
+        </div>
+        <div class="header-badge">FF INFO TOOL</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEARCH SECTION -->
+  <section class="search-section">
+    <div class="search-card">
+      <h2 class="search-title">🔍 Player Info Search</h2>
+      <p class="search-sub">Enter Free Fire UID to get full player information</p>
+      <div class="search-row">
+        <input type="text" id="uidInput" placeholder="Enter Free Fire UID..." maxlength="20"/>
+        <select id="regionSelect">
+          <option value="">Auto Region</option>
+          <option value="ME">ME (Middle East)</option>
+          <option value="BD">BD (Bangladesh)</option>
+          <option value="IND">IND (India)</option>
+          <option value="SG">SG (Singapore)</option>
+          <option value="ID">ID (Indonesia)</option>
+          <option value="TH">TH (Thailand)</option>
+          <option value="VN">VN (Vietnam)</option>
+          <option value="PK">PK (Pakistan)</option>
+          <option value="BR">BR (Brazil)</option>
+          <option value="US">US (USA)</option>
+          <option value="EU">EU (Europe)</option>
+        </select>
+        <button id="searchBtn" onclick="searchPlayer()">
+          <span id="btnText">SEARCH</span>
+          <span id="btnLoader" class="loader" style="display:none;"></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULT SECTION -->
+  <section id="resultSection" style="display:none;">
+    <div class="result-wrap">
+
+      <!-- PLAYER HEADER CARD -->
+      <div class="player-header-card">
+        <div class="player-avatar-wrap">
+          <img id="playerAvatar" src="" alt="Avatar" class="player-avatar"
+               onerror="this.src='https://cdn.jsdelivr.net/gh/ShahGCreator/icon@main/PNG/902001.png'"/>
+        </div>
+        <div class="player-header-info">
+          <h2 id="playerName" class="player-name">—</h2>
+          <div class="player-tags">
+            <span class="tag tag-region" id="tagRegion">—</span>
+            <span class="tag tag-level"  id="tagLevel">LV —</span>
+            <span class="tag tag-guild"  id="tagGuild">No Guild</span>
+          </div>
+          <div class="player-stats-mini">
+            <div class="stat-mini"><span class="stat-mini-val" id="statLikes">—</span><span class="stat-mini-lbl">Likes</span></div>
+            <div class="stat-mini"><span class="stat-mini-val" id="statEXP">—</span><span class="stat-mini-lbl">EXP</span></div>
+            <div class="stat-mini"><span class="stat-mini-val" id="statBPBadge">—</span><span class="stat-mini-lbl">BP Badge</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INFO ROWS (horizontal like profile) -->
+      <div class="wide-card">
+        <div class="card-header"><span class="card-icon">👤</span> Account Info</div>
+        <div class="info-row-list" id="accountInfoList"></div>
+      </div>
+
+      <div class="wide-card">
+        <div class="card-header"><span class="card-icon">🏰</span> Guild Info</div>
+        <div class="info-row-list" id="guildInfoList"></div>
+      </div>
+
+      <div class="wide-card">
+        <div class="card-header"><span class="card-icon">🏆</span> Rank Info</div>
+        <div class="info-row-list" id="rankInfoList"></div>
+      </div>
+
+      <div class="wide-card">
+        <div class="card-header"><span class="card-icon">🐾</span> Pet Info</div>
+        <div class="info-row-list" id="petInfoList"></div>
+      </div>
+
+      <!-- EQUIPPED OUTFIT -->
+      <div class="wide-card">
+        <div class="card-header"><span>👗</span> Equipped Outfit</div>
+        <div class="equipped-grid" id="outfitGrid"></div>
+      </div>
+
+      <!-- EQUIPPED WEAPONS -->
+      <div class="wide-card">
+        <div class="card-header"><span>🔫</span> Equipped Weapon Skins</div>
+        <div class="equipped-grid" id="weaponGrid"></div>
+      </div>
+
+      <!-- EQUIPPED SKILLS — plain text list -->
+      <div class="wide-card">
+        <div class="card-header"><span>⚡</span> Equipped Skills</div>
+        <div class="skill-list" id="skillList"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ERROR BOX -->
+  <div id="errorBox" class="error-box" style="display:none;">
+    <span>❌</span> <span id="errorMsg">Something went wrong.</span>
+  </div>
+
+  <!-- HOW TO USE BUTTON -->
+  <div class="how-btn-wrap">
+    <button class="how-btn" onclick="toggleGuide()">📖 HOW TO USE / কিভাবে ব্যবহার করবেন</button>
+  </div>
+
+  <!-- HOW TO USE GUIDE -->
+  <div id="guideBox" class="guide-box" style="display:none;">
+    <div class="guide-inner">
+      <button class="guide-close" onclick="toggleGuide()">✕</button>
+      <h3 class="guide-title">📖 How to Use / কিভাবে ব্যবহার করবেন</h3>
+      <div class="guide-lang">
+        <div class="guide-block">
+          <h4>🇬🇧 English Guide</h4>
+          <ol>
+            <li>Open your <strong>Free Fire</strong> game.</li>
+            <li>Go to your <strong>Profile</strong> → copy your <strong>UID</strong>.</li>
+            <li><strong>Paste the UID</strong> in the search box above.</li>
+            <li>Select your <strong>Region</strong> or leave Auto.</li>
+            <li>Click <strong>SEARCH</strong> button.</li>
+            <li>Full player info appears — outfit, weapon skins, skills & more.</li>
+          </ol>
+        </div>
+        <div class="guide-block">
+          <h4>🇧🇩 বাংলা গাইড</h4>
+          <ol>
+            <li>আপনার <strong>Free Fire</strong> গেম খুলুন।</li>
+            <li><strong>প্রোফাইলে</strong> যান → <strong>UID</strong> কপি করুন।</li>
+            <li>সার্চ বক্সে <strong>UID পেস্ট</strong> করুন।</li>
+            <li><strong>রিজিয়ন সিলেক্ট</strong> করুন অথবা Auto রাখুন।</li>
+            <li><strong>SEARCH</strong> বাটনে ক্লিক করুন।</li>
+            <li>সম্পূর্ণ প্লেয়ার ইনফো দেখা যাবে।</li>
+          </ol>
+        </div>
+      </div>
+      <div class="guide-note">
+        <strong>⚠️ Note / নোট:</strong> This tool only shows <em>public</em> profile info. No private data accessed. / শুধু পাবলিক তথ্য দেখায়।
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>⚡ KAWSARxFFINFO &copy; 2024 &nbsp;|&nbsp; Free Fire Player Info Tool &nbsp;|&nbsp; Made with ❤️</p>
+  </footer>
+
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>
